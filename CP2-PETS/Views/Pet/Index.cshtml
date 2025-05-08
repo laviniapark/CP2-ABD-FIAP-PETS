@@ -1,0 +1,74 @@
+@model List<Pet>
+
+@{
+    ViewData["Title"] = "Pets";
+}
+
+@section Banner {
+    <div class="alert alert-info text-center">
+        Quer adotar um pet? Clique aqui!
+    </div>
+}
+
+<h1>Pets</h1>
+
+<mensagem texto="@TempData["msg"]" class="alert alert-danger"></mensagem>
+
+<a asp-action="Cadastrar" class="btn btn-sm btn-outline-danger">Cadastrar</a>
+
+<table class="table">
+    <tr>
+        <th>Nome</th>
+        <th>Tipo</th>
+        <th>Raça</th>
+        <th>Data de Nascimento</th>
+        <th>Sexo</th>
+        <th>Peso</th>
+        <th>Vacinado</th>
+        <th>Nome do Dono</th>
+        <th>Contato do Dono</th>
+        <th></th>
+    </tr>
+    @foreach (var p in Model)
+    {
+        <tr>
+            <td>@p.Nome</td>
+            <td>@p.Tipo</td>
+            <td>@p.Raca</td>
+            <td>@p.DataNascimento</td>
+            <td>@p.Sexo</td>
+            <td>@(p.Vacinado?"Sim":"Não")</td>
+            <td>@p.NomeDono</td>
+            <td>@p.ContatoDono</td>
+            <td>
+                <a asp-action="Editar" class="btn btn-sm btn-outline-primary" asp-route-id="@p.Id">
+                    Editar
+                </a>
+                <button onclick="petId.value = @p.Id" type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Remover
+                </button>
+            </td>
+        </tr>
+    }
+</table>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirmação</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Deseja realmente remover o pet?
+            </div>
+            <div class="modal-footer">
+                <form asp-action="remover">
+                    <input name="id" type="hidden" id="petId"/>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
+                    <button type="submit" class="btn btn-danger">Sim</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,15 @@
+@model Pet
+
+@{
+    ViewData["Title"] = "Cadastro de Pet";
+}
+
+<h1>Cadastro de Pet</h1>
+
+<mensagem texto="@TempData["msg"]"></mensagem>
+
+<form asp-action="Cadastrar">
+    <partial name="_Form"/>
+    <botao></botao>
+    <a asp-action="Index" class="btn btn-dark">Lista de Pets</a>
+</form>
